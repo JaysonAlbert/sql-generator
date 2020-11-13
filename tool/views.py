@@ -19,6 +19,7 @@ class FileUploadView(APIView):
         file_serializer = FileSerializer(data=request.data)
 
         if file_serializer.is_valid():
+            file_serializer.save()
             file = request.FILES['file']
             in_path = os.path.join(settings.MEDIA_ROOT, file.name)
             if os.path.exists(in_path):
