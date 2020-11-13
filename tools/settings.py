@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 from corsheaders.defaults import default_headers
-import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,7 +26,7 @@ SECRET_KEY = 'nvkpnwk4gh8=!6^gn9jx_)u69bvusxb%c3a-ap8w*^dd@2(#-b'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
