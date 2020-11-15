@@ -135,18 +135,12 @@ def parse_index(line, prefix, table_name, index_tablespace):
                                       key_values) + table_space
 
 
-def extract_all(f, tablespace, index_tablespace, opath, db_cursor):
-    basename = os.path.basename(f)
+def extract_all(f, tablespace, index_tablespace, opath, basename, db_cursor):
     table_name = "_".join(basename.split("_")[:-1])
 
     df = read_docx_tables(f, 1)
     table_sql = extract_sql(df, basename, tablespace)
     index_sql = filter_index(f, basename, index_tablespace)
-
-    wf = open("{}/{}.sql".format(opath, basename.replace('.docx', '')), "w+", encoding='GBK')
-    wf.writelines(table_sql)
-    wf.writelines(index_sql)
-    wf.close()
 
     if db_cursor:
         try:
@@ -169,6 +163,8 @@ def extract_all(f, tablespace, index_tablespace, opath, db_cursor):
             except Exception as er:
                 print('执行失败：{}'.format(s))
                 print(er)
+
+    return table_sql + '\n' + index_sql
 
 
 if __name__ == "__main__":
@@ -201,6 +197,7 @@ if __name__ == "__main__":
             if not f.endswith("docx") or f.startswith("~$"):
                 continue
 
-            extract_all(os.path.join(cur_dir, f), args.tablespace, args.index_tablespace, opath, cursor)
+            basename = os.path.basename(f)
+            extract_all(os.path.join(cur_dir, f), args.tablespace, args.index_tablespace, opath, basename, cursor)
         except Exception as e:
             print(e)
