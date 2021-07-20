@@ -22,7 +22,7 @@ class FileUploadView(APIView):
 
     def post(self, request, filename, *args, **kwargs):
         file = request.data['file']
-        sql_file = extract_all(file, 'IDX_CSP_CLI', 'IDX_CSPIDX_CLI', settings.MEDIA_ROOT, filename, None)
+        sql_file = extract_all(file, 'TBS_CSP_CLI', 'TBS_CSPIDX_DEF', settings.MEDIA_ROOT, filename, None)
 
         file_serializer = FileSerializer(data={
             'file': file,
